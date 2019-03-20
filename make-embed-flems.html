@@ -1,0 +1,35 @@
+<script src="https://flems.io/flems.html" type="text/javascript" charset="utf-8"></script>
+<script>
+Flems(document.body, {
+  "console": "collapsed",
+  "scroll": [
+    0,
+    0
+  ],
+  "files": [
+    {
+      "name": ".html",
+      "content": "<form onsubmit=\"makeLink();return false\">\n  <input placeholder=\"Flems url\">\n  <button type=\"submit\">\n    Make embed code\n  </button>  \n</form>\n<textarea></textarea>",
+      "selections": "5:7"
+    },
+    {
+      "name": ".js",
+      "content": "function makeLink(){\n const url = document.querySelector('input').value\n const flemsCode = url.split('flems.io/#0=')[1] || url\n const code = JSON.parse(LZString.decompressFromEncodedURIComponent(flemsCode))\n code.files.map(file => { \n    file.content = file.content.replace(/<\\/script>/ig,'<\\\\/script>')\n  })\n  \n document.querySelector('textarea').textContent = `<script src=\"https://flems.io/flems.html\" type=\"text/javascript\" charset=\"utf-8\"><\\/script>\n<script>\nFlems(document.body, ${JSON.stringify(code, null, 2)})\n<\\/script>`\n}",
+      "selections": "4:20"
+    },
+    {
+      "name": ".css",
+      "content": "textarea {\n  margin-top: 30px; \n  width: 60%;\n  height: 250px;\n}",
+      "selections": "1:19"
+    }
+  ],
+  "links": [
+    {
+      "name": "lz-string",
+      "url": "https://unpkg.com/lz-string@1.4.4/libs/lz-string.js",
+      "type": "script"
+    }
+  ],
+  "name": "Flems url –> embed code"
+})
+</script>
